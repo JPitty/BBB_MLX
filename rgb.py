@@ -33,7 +33,7 @@ def blinkit(r, g, b, t):
 
 class EventHandler (pyinotify.ProcessEvent):
  def process_IN_MODIFY(self, event):
-   f=open("/root/RGB",'r')
+   f=open("/root/BBB_MLX/RGB",'r')
    req=str.strip(f.read())
    f.close()
    
@@ -52,5 +52,5 @@ class EventHandler (pyinotify.ProcessEvent):
 
 handler = EventHandler()
 notifier = pyinotify.Notifier(wm, handler)
-wdd = wm.add_watch('/root/RGB', mask)
+wdd = wm.add_watch('/root/BBB_MLX/RGB', mask)
 notifier.loop()

@@ -2,18 +2,17 @@ var i2c = require('i2c-bus'),
    i2c1 = i2c.openSync(1);
  
 var DS1621_ADDR = 0x68,
-      CMD_ACCESS_CONFIG = 0xac,
-        CMD_READ_TEMP = 0xaa,
-	  CMD_START_CONVERT = 0xee;
+   CMD_ACCESS_CONFIG = 0xac,
+   CMD_READ_TEMP = 0xaa,
+   CMD_START_CONVERT = 0xee;
  
 function toCelsius(rawTemp) {
-	  var halfDegrees = ((rawTemp & 0xff) << 1) + (rawTemp >> 15);
+  var halfDegrees = ((rawTemp & 0xff) << 1) + (rawTemp >> 15);
 	   
-	    if ((halfDegrees & 0x100) === 0) {
-		        return halfDegrees / 2; // Temp +ve 
-			  }
-	     
-	      return -((~halfDegrees & 0xff) / 2); // Temp -ve 
+  if ((halfDegrees & 0x100) === 0) {
+    return halfDegrees / 2; // Temp +ve 
+  }	     
+  return -((~halfDegrees & 0xff) / 2); // Temp -ve 
 }
  
 (function () {

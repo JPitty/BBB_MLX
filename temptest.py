@@ -5,11 +5,13 @@
 
 from Adafruit_I2C import Adafruit_I2C
 
-i2c = Adafruit_I2C(0x20,2) #device addr, busnum
+i2c = Adafruit_I2C(0x20,1) #device addr, busnum
 from time import sleep
+import display
 
 tavg = 0
 hot = 0
+counter = 1
 
 try:
   while 1:
@@ -21,6 +23,11 @@ try:
     tavg = round(tavg * 0.9 + tobj1 * 0.1, 2)
     print tobj1 #, tavg
 
+    #display the average
+    if counter == 10:
+        display.main(str(tavg), 50)
+	counter = 0
+
     #control the RGB led
     if tobj1 > 30 and hot == 0:
         hot = 1
@@ -31,6 +38,7 @@ try:
         with open("RGB", "w") as tf:
             tf.write("0 5 50")
 
+    counter += 1
     sleep(0.1)
 
 except KeyboardInterrupt:

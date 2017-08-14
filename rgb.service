@@ -1,0 +1,9 @@
+[Unit]
+Description=Control RGB output
+
+[Service]
+ExecStart=/root/BBB_MLX/rgb.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

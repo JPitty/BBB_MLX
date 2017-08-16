@@ -13,6 +13,16 @@ tavg = 0
 hot = 0
 counter = 1
 
+def writetf(tfstr):
+    with open("/root/BBB_MLX/RGB", "w") as tf:
+        tf.write(str(tfstr))
+
+#wakeup the led:
+writetf('0 50 0')
+sleep(1)
+writetf('0 0 0')
+sleep(1)
+
 try:
   while 1:
     tobj1 = i2c.readU16(0x7)
@@ -31,12 +41,12 @@ try:
     #control the RGB led
     if tobj1 > 30 and hot == 0:
         hot = 1
-        with open("RGB", "w") as tf:
-            tf.write("100 0 0")
+        writetf('100 0 0')
+	print "wrote hot to file"
     if tobj1 < 30 and hot ==1:
         hot = 0
-        with open("RGB", "w") as tf:
-            tf.write("0 5 50")
+        writetf('0 5 50')
+	print "wrote cold to file"
 
     counter += 1
     sleep(0.1)
